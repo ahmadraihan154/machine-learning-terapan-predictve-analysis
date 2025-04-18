@@ -141,57 +141,6 @@ Tabel 4 Penjelasan Informasi Statistik Dataset
 | **Ripeness**  | ✅ Ya       | ⚠️ Ya     | Tingkat kematangan bisa sangat bervariasi. Nilai ekstrem bisa muncul dari apel yang belum atau terlalu matang. |
 | **Acidity**   | ✅ Ya       | ⚠️ Ya     | Tingkat keasaman berbeda antar jenis apel. Nilai tinggi atau rendah bukan hal aneh, tapi tetap bisa dianggap outlier secara statistik. |
 
-## 3.2 EDA - Univariate Analysis
-### 3.2.1 Categorical Column
-- Karena hanya ada satu kolom yaitu Quality (label/target) sehingga analisis hanya ingin melihat keseimbangannya menggunakan barplot.
-![image](https://github.com/user-attachments/assets/05cafb03-d789-471c-a063-b0882c5aa235)
-Gambar 1 Barplot Perbandingan Kelas Kualitas Apel
-
-- Insight yang didapatkan dari Gambar 1:
-  - Dari grafik yang diberikan terlihat bahwa kolom quality yang mana menjadi label/target seimbang sehingga tidak perlu dilakukan penanganan imbalance data.
-  - Menjaga keseimbangan pada data penting agar model tidak bias ke salah satu kelas.
-
-### 3.2.2 Numerical Column
-- Untuk kolom numerik dilakukan analisis persebaran data menggunakan histogram untuk melihat apakah datanya terdistribusi normal, skewed, ataupun disribusi lainnya.
-![image](https://github.com/user-attachments/assets/5162140f-23bb-4272-89a2-fd6283ae5526)
-Gambar 2 Histogram dari Persebaran Masing-Masing Data
-
-- Insight yang didapatkan dari Gambar 2:
-  - Berdasarkan visualisasi histogram untuk fitur numerik seperti Size, Weight, Sweetness, Crunchiness, Juiciness, Ripeness, dan Acidity, dapat disimpulkan bahwa semua fitur memiliki bentuk distribusi yang mendekati normal (bell-shaped curve). Hal ini ditunjukkan oleh pola simetris di sekitar nilai tengah, dengan jumlah data yang semakin sedikit pada nilai ekstrem kiri dan kanan.
- 
-## 3.3 EDA - Multivariate Analysis
-### 3.3.1 Numeric Columns
-- Pada tahap ini, dilakukan analisis multivariat untuk memahami hubungan antar fitur numerik dan keterkaitannya dengan label.
-- Pertama, digunakan heatmap korelasi untuk melihat sejauh mana fitur-fitur numerik saling berkorelasi. Tujuannya adalah untuk mengidentifikasi kemungkinan adanya multikolinearitas, yaitu kondisi di mana dua atau lebih fitur memiliki korelasi yang sangat tinggi, yang dapat memengaruhi performa model prediktif.
-
-![image](https://github.com/user-attachments/assets/5ddb582d-a9f9-400d-a002-218cf6a2ea5b)
-
-Gambar 3 Heatmap Korelasi antar Fitur Numerik
-
-- Insight yang didapatkan dari Gambar 3:
-  - Nilai korelasi antar fitur sebagian besar berada di kisaran -0.3 hingga 0.3, yang menandakan hubungan yang lemah atau sangat lemah antar fitur numerik.
-  - Hal ini mengindikasikan bahwa setiap fitur numerik memberikan informasi yang relatif independen, sehingga semuanya masih layak dipertimbangkan untuk modeling tanpa risiko multikolineritas data.
-
-- Selanjutnya, dibuat barplot rata-rata setiap fitur numerik terhadap kelas 'quality'. Visualisasi ini membantu memahami pola hubungan antara karakteristik apel (seperti sweetness, crunchiness, dll.) dengan tingkat kualitasnya. Dengan demikian, kita bisa mengidentifikasi fitur mana yang paling berkontribusi dalam membedakan kualitas apel.
-
-![image](https://github.com/user-attachments/assets/1d647ab0-6835-4701-9da8-12b6b94c4175)
-Gambar 4 Barplot Hubungan Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
-
-- Adapun insight yang didapatkan dari Gambar 4 dapat dilihat pada Tabel 4 dibawah:
-
-Tabel 4 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
-
-| Fitur         | Rata-rata pada Apel kualitas "Good" | Rata-rata pada Apel kualitas "Bad" | Insight                                                                 |
-|---------------|-----------------------------|-----------------------------|-------------------------------------------------------------------------|
-| **Size**      | -0.04                        | -0.97                        | Apel berkualitas bagus cenderung sedikit lebih besar dibanding apel jelek.     |
-| **Weight**    | -0.99                        | -0.98                        | Berat apel hampir sama untuk keduanya sehingga fitur ini tidak terlalu berpengaruh.     |
-| **Sweetness** | -0.01                        | -0.93                        | Apel berkualitas bagus cenderung lebih manis, sedangkan yang buruk kurang manis.       |
-| **Crunchiness** | 0.98                       | 0.99                         | Keduanya renyah sehingga fitur crunchiness tidak terlalu mempengaruhi kualitas apel.  |
-| **Juiciness** | 0.98                         | 0.04                         | Apel berkualitas bagus jauh lebih juicy dibanding yang kualitas buruk.     |
-| **Ripeness**  | 0.05                         | 0.99                         | Aneh: apel buruk justru lebih matang — kemungkinan **overripe** (apel terlalu matang).       |
-| **Acidity**   | 0.03                         | 0.08                         | Perbedaan kecil dimana apel berkualitas bagus cenderung tidak begitu asam dibandingkan apple kualitas buruk.     |
-
-# 4. Data Preparation
 - Pada tahap ini, dilakukan serangkaian proses untuk menyiapkan data mentah agar dapat digunakan dalam pembuatan model prediktif. Beberapa langkah penting yang dilakukan dalam proses Data Preparation meliputi:
 
 - **Missing Value (Data yang Hilang)**:  Dilakukan pengecekan terhadap setiap kolom untuk mengetahui apakah terdapat nilai yang hilang.
@@ -203,8 +152,8 @@ Tabel 4 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
     - Menghapus data outlier jika jumlahnya sedikit dan tidak mempengaruhi distribusi utama.
     - Melakukan transformasi atau normalisasi untuk mengurangi dampak outlier.
 
-## 4.1 Pengecekan dan Penganganan Missing Value dan Data Duplikat
-- Salah satu tahap awal yang sangat penting adalah memastikan bahwa tidak ada nilai yang hilang (`missing value`) atau data yang berulang (`duplicated data`). Berikut adalah kode Python yang digunakan:
+## 3.2 Pengecekan dan Penganganan Missing Value dan Data Duplikat
+Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`missing value`) atau data yang berulang (`duplicated data`). Berikut adalah kode Python yang digunakan:
 
 ```python
 # Cek kolom dengan data yang hilang
@@ -224,12 +173,12 @@ Jumlah Data yang Duplikat : 0
 - Dari hasil diatas ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
 - Selain itu, tidak ditemukan duplikasi dari data yang digunakan.
  
-## 4.2 Pengecekan dan Penanganan Outlier
-- Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 5
+## 3.3 Pengecekan dan Penanganan Outlier
+- Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 1
 ![image](https://github.com/user-attachments/assets/0ebca202-26fe-4d4c-81fa-a7847634b7a2)
-Gambar 5 Deteksi Outlier dengan Boxplot
+Gambar 1 Deteksi Outlier dengan Boxplot
 
-- Insight yang didaptkan dari Gambar 5:
+- Insight yang didaptkan dari Gambar 1:
   - Berdasarkan grafik boxplot yang ditampilkan terlihat bahwa hanya semua fitur numerik yang memiliki outlier (ditandai dengan simbol bulat).
   - Adapun untuk outlier yang ditemukan akan dilakukan penanganan dengan dihapus menggunakan metode IQR. IQR dihitung dengan mengurangkan kuartil ketiga (Q3) dari kuartil pertama (Q1) sebagaimana rumus berikut.
 
@@ -238,9 +187,63 @@ $$IQR = Q_3 - Q_1$$
 - Q1 adalah kuartil pertama 
 - Q3 adalah kuartil ketiga.
 
-- Setelah menangani outlier jumlah data berubah yang awalnya 4000 menjadi 3790.
+- Setelah menangani outlier jumlah data berubah yang awalnya 4000 menjadi 3790 maka..
+- Hasilnya data dapat dianalisis dengan lebih baik ketika telah ditangani dengan mengecek kolom numerik atau kolom kategorikalnya.
 
-## 4.3 Mengidentifikasi Fitur dan Label
+## 3.4 EDA - Univariate Analysis
+### 3.4.1 Categorical Column
+- Karena hanya ada satu kolom yaitu Quality (label/target) sehingga analisis hanya ingin melihat keseimbangannya menggunakan barplot.
+![image](https://github.com/user-attachments/assets/05cafb03-d789-471c-a063-b0882c5aa235)
+Gambar 2 Barplot Perbandingan Kelas Kualitas Apel
+
+- Insight yang didapatkan dari Gambar 2:
+  - Dari grafik yang diberikan terlihat bahwa kolom quality yang mana menjadi label/target seimbang sehingga tidak perlu dilakukan penanganan imbalance data.
+  - Menjaga keseimbangan pada data penting agar model tidak bias ke salah satu kelas.
+
+### 3.4.2 Numerical Column
+- Untuk kolom numerik dilakukan analisis persebaran data menggunakan histogram untuk melihat apakah datanya terdistribusi normal, skewed, ataupun disribusi lainnya.
+![image](https://github.com/user-attachments/assets/5162140f-23bb-4272-89a2-fd6283ae5526)
+Gambar 3 Histogram dari Persebaran Masing-Masing Data
+
+- Insight yang didapatkan dari Gambar 3:
+  - Berdasarkan visualisasi histogram untuk fitur numerik seperti Size, Weight, Sweetness, Crunchiness, Juiciness, Ripeness, dan Acidity, dapat disimpulkan bahwa semua fitur memiliki bentuk distribusi yang mendekati normal (bell-shaped curve). Hal ini ditunjukkan oleh pola simetris di sekitar nilai tengah, dengan jumlah data yang semakin sedikit pada nilai ekstrem kiri dan kanan.
+ 
+## 3.5 EDA - Multivariate Analysis
+### 3.5.1 Numeric Columns
+- Pada tahap ini, dilakukan analisis multivariat untuk memahami hubungan antar fitur numerik dan keterkaitannya dengan label.
+- Pertama, digunakan heatmap korelasi untuk melihat sejauh mana fitur-fitur numerik saling berkorelasi. Tujuannya adalah untuk mengidentifikasi kemungkinan adanya multikolinearitas, yaitu kondisi di mana dua atau lebih fitur memiliki korelasi yang sangat tinggi, yang dapat memengaruhi performa model prediktif.
+
+![image](https://github.com/user-attachments/assets/5ddb582d-a9f9-400d-a002-218cf6a2ea5b)
+
+Gambar 4 Heatmap Korelasi antar Fitur Numerik
+
+- Insight yang didapatkan dari Gambar 4:
+  - Nilai korelasi antar fitur sebagian besar berada di kisaran -0.3 hingga 0.3, yang menandakan hubungan yang lemah atau sangat lemah antar fitur numerik.
+  - Hal ini mengindikasikan bahwa setiap fitur numerik memberikan informasi yang relatif independen, sehingga semuanya masih layak dipertimbangkan untuk modeling tanpa risiko multikolineritas data.
+
+- Selanjutnya, dibuat barplot rata-rata setiap fitur numerik terhadap kelas 'quality'. Visualisasi ini membantu memahami pola hubungan antara karakteristik apel (seperti sweetness, crunchiness, dll.) dengan tingkat kualitasnya. Dengan demikian, kita bisa mengidentifikasi fitur mana yang paling berkontribusi dalam membedakan kualitas apel.
+
+![image](https://github.com/user-attachments/assets/1d647ab0-6835-4701-9da8-12b6b94c4175)
+Gambar 5 Barplot Hubungan Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
+
+- Adapun insight yang didapatkan dari Gambar 5 dapat dilihat pada Tabel 4 dibawah:
+
+Tabel 4 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
+
+| Fitur         | Rata-rata pada Apel kualitas "Good" | Rata-rata pada Apel kualitas "Bad" | Insight                                                                 |
+|---------------|-----------------------------|-----------------------------|-------------------------------------------------------------------------|
+| **Size**      | -0.04                        | -0.97                        | Apel berkualitas bagus cenderung sedikit lebih besar dibanding apel jelek.     |
+| **Weight**    | -0.99                        | -0.98                        | Berat apel hampir sama untuk keduanya sehingga fitur ini tidak terlalu berpengaruh.     |
+| **Sweetness** | -0.01                        | -0.93                        | Apel berkualitas bagus cenderung lebih manis, sedangkan yang buruk kurang manis.       |
+| **Crunchiness** | 0.98                       | 0.99                         | Keduanya renyah sehingga fitur crunchiness tidak terlalu mempengaruhi kualitas apel.  |
+| **Juiciness** | 0.98                         | 0.04                         | Apel berkualitas bagus jauh lebih juicy dibanding yang kualitas buruk.     |
+| **Ripeness**  | 0.05                         | 0.99                         | Aneh: apel buruk justru lebih matang — kemungkinan **overripe** (apel terlalu matang).       |
+| **Acidity**   | 0.03                         | 0.08                         | Perbedaan kecil dimana apel berkualitas bagus cenderung tidak begitu asam dibandingkan apple kualitas buruk.     |
+
+# 4. Data Preparation
+Pada tahap data preparation, setelah memahami kondisi data maka dilakukanlah preprocessing agar data tersebut dapat dilatih oleh model. Tahapannya dapat diikuti seperti dibawah:
+
+## 4.1 Mengidentifikasi Fitur dan Label
 
 Tahap selanjutnya adalah mengidentifikasi fitur dan label dari dataset. Fitur (*features*) adalah variabel yang digunakan sebagai input untuk memprediksi target, sedangkan label (*target*) adalah variabel yang ingin diprediksi.
 
@@ -258,21 +261,21 @@ Pada kasus ini:
 - **Label**:  
   - `Quality`, karena merupakan target klasifikasi kualitas apel (baik/buruk)
 
-## 4.4 Encoding
+## 4.2 Encoding
 Sebelum data dibagi ke dalam data latih dan data uji, perlu dilakukan proses **encoding** terhadap kolom `Quality` karena tipe datanya masih berupa `object` (string), yaitu `"good"` dan `"bad"`. Model machine learning hanya dapat menerima input dalam bentuk numerik, sehingga perlu dilakukan konversi label ke bentuk bilangan bulat.
 
 - Proses encoding:
   - `good` → `1`
   - `bad` → `0`
 
-## 4.5 Membagi Data
+## 4.3 Membagi Data
 Tahap berikutnya adalah membagi data menjadi data latih dan data uji dengan rasio 80:20. Pembagian ini penting untuk memastikan bahwa model tidak hanya belajar dari keseluruhan data tetapi juga diuji pada data yang belum pernah dilihat sebelumnya, sehingga performanya dapat dievaluasi secara objektif.
 
 Jumlah data awal yang tersedia adalah 3790 baris. Setelah dilakukan pembagian data:
   - Data latih (train set): 3.032 data (80%)
 - Data uji (test set): 758 data (20%)
 
-## 4.6 Feature Scaling
+## 4.4 Feature Scaling
 Pada tahap ini dilakukan proses normalisasi data menggunakan Min-Max Scaling.  Normalisasi dilakukan dikarenakan proyek ini  akan menggunakan model berbasis jarak seperti K-Nearest Neighbors (KNN), Support Vector Machine (SVM), dan juga Logistic Regression, di mana performa model tersebut akan lebih optimal jika setiap fitur berada dalam rentang skala 0 hingga 1.
 
 # 5. Modeling
