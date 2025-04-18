@@ -141,17 +141,6 @@ Tabel 4 Penjelasan Informasi Statistik Dataset
 | **Ripeness**  | ✅ Ya       | ⚠️ Ya     | Tingkat kematangan bisa sangat bervariasi. Nilai ekstrem bisa muncul dari apel yang belum atau terlalu matang. |
 | **Acidity**   | ✅ Ya       | ⚠️ Ya     | Tingkat keasaman berbeda antar jenis apel. Nilai tinggi atau rendah bukan hal aneh, tapi tetap bisa dianggap outlier secara statistik. |
 
-- Pada tahap ini, dilakukan serangkaian proses untuk menyiapkan data mentah agar dapat digunakan dalam pembuatan model prediktif. Beberapa langkah penting yang dilakukan dalam proses Data Preparation meliputi:
-
-- **Missing Value (Data yang Hilang)**:  Dilakukan pengecekan terhadap setiap kolom untuk mengetahui apakah terdapat nilai yang hilang.
-- **Duplicated Data (Data Duplikat)**: Data duplikat dicek untuk memastikan tidak ada entri yang berulang yang dapat menyebabkan bias dalam pelatihan model. 
-- **Outlier (Nilai Pencilan)**:  Outlier adalah data yang secara signifikan berbeda dari mayoritas nilai lainnya. Outlier dapat mempengaruhi performa model, terutama pada model yang sensitif terhadap skala data seperti K-Nearest Neighbors (KNN) atau Linear Regression. Deteksi outlier akan dilakukan menggunakan metode statistik seperti:
-    - Boxplot untuk visualisasi distribusi data.
-    - Z-score/IQR (Interquartile Range) untuk identifikasi nilai ekstrem.  
-    Jika ditemukan outlier, penanganan yang dapat dilakukan antara lain:
-    - Menghapus data outlier jika jumlahnya sedikit dan tidak mempengaruhi distribusi utama.
-    - Melakukan transformasi atau normalisasi untuk mengurangi dampak outlier.
-
 ## 3.2 Pengecekan dan Penganganan Missing Value dan Data Duplikat
 Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`missing value`) atau data yang berulang (`duplicated data`). Berikut adalah kode Python yang digunakan:
 
