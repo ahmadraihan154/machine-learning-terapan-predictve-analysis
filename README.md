@@ -162,7 +162,7 @@ Jumlah Data yang Duplikat : 0
 - Dari hasil diatas ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
 - Selain itu, tidak ditemukan duplikasi dari data yang digunakan.
  
-## EDA - 3.3 Pengecekan dan Penanganan Outlier
+## 3.3 EDA - Pengecekan dan Penanganan Outlier
 - Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 1
 ![image](https://github.com/user-attachments/assets/0ebca202-26fe-4d4c-81fa-a7847634b7a2)
 Gambar 1 Deteksi Outlier dengan Boxplot
