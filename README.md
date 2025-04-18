@@ -141,7 +141,7 @@ Tabel 4 Penjelasan Informasi Statistik Dataset
 | **Ripeness**  | ✅ Ya       | ⚠️ Ya     | Tingkat kematangan bisa sangat bervariasi. Nilai ekstrem bisa muncul dari apel yang belum atau terlalu matang. |
 | **Acidity**   | ✅ Ya       | ⚠️ Ya     | Tingkat keasaman berbeda antar jenis apel. Nilai tinggi atau rendah bukan hal aneh, tapi tetap bisa dianggap outlier secara statistik. |
 
-## 3.2 Pengecekan dan Penganganan Missing Value dan Data Duplikat
+## 3.2 Pengecekan dan Penanganan Missing Value dan Data Duplikat
 Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`missing value`) atau data yang berulang (`duplicated data`). Berikut adalah kode Python yang digunakan:
 
 ```python
