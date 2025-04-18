@@ -523,7 +523,6 @@ Dengan keunggulan di keempat metrik tersebut, **SVM dipilih sebagai model terbai
 ---
 
 # Referensi
---
 1. Purnomo, I. I., & Syafarina, G. A. (2024). Analisis Prediktif Dan Preprocessing Untuk Kualitas Buah Apel Pendekatan Machine Learning. Technologia: Jurnal Ilmiah, 15(4), 681-687.
 2. Mahmudan.(2024). Produksi Apel Malang Terus Menurun .
 3. Pamungkasih, E., Ristanti, R. F., Ramayanti, K., & Arini, I. Y. (2023, September). Strategi Pengembangan Komoditas Buah Apel di Kabupaten Malang. In Prosiding Seminar Nasional Pembangunan dan Pendidikan Vokasi Pertanian (Vol. 4, No. 1, pp. 105-113).
