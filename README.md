@@ -215,9 +215,9 @@ Gambar 4 Heatmap Korelasi antar Fitur Numerik
 ![image](https://github.com/user-attachments/assets/1d647ab0-6835-4701-9da8-12b6b94c4175)
 Gambar 5 Barplot Hubungan Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
 
-- Adapun insight yang didapatkan dari Gambar 5 dapat dilihat pada Tabel 4 dibawah:
+- Adapun insight yang didapatkan dari Gambar 5 dapat dilihat pada Tabel 5 dibawah:
 
-Tabel 4 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
+Tabel 5 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
 
 | Fitur         | Rata-rata pada Apel kualitas "Good" | Rata-rata pada Apel kualitas "Bad" | Insight                                                                 |
 |---------------|-----------------------------|-----------------------------|-------------------------------------------------------------------------|
