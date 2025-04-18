@@ -178,7 +178,7 @@ $$IQR = Q_3 - Q_1$$
 
 - Setelah menangani outlier jumlah data berubah yang awalnya 4000 menjadi 3790 maka.
   
-- **Setelah dilakukan pengecekan dan penghapusan nilai hilang, outlier, serta duplikat, data dapat dianalisis lebih lanjut melalui EDA dengan hasil yang lebih bersih dan informatif, tanpa bias dari data yang tidak valid.**
+- **Setelah dilakukan pengecekan dan penghapusan nilai hilang, outlier, serta duplikat, data dapat dieksplorasi (EDA) lebih lanjut dengan hasil yang lebih bersih dan informatif, tanpa bias dari data yang tidak valid.**
 
 ## 3.4 EDA - Univariate Analysis
 ### 3.4.1 Categorical Column
