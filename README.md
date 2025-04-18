@@ -141,7 +141,7 @@ Tabel 4 Penjelasan Informasi Statistik Dataset
 | **Ripeness**  | ✅ Ya       | ⚠️ Ya     | Tingkat kematangan bisa sangat bervariasi. Nilai ekstrem bisa muncul dari apel yang belum atau terlalu matang. |
 | **Acidity**   | ✅ Ya       | ⚠️ Ya     | Tingkat keasaman berbeda antar jenis apel. Nilai tinggi atau rendah bukan hal aneh, tapi tetap bisa dianggap outlier secara statistik. |
 
-## 3.2 Pengecekan dan Penanganan Missing Value dan Data Duplikat
+## 3.2 EDA - Pengecekan dan Penanganan Missing Value dan Data Duplikat
 Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`missing value`) atau data yang berulang (`duplicated data`). Berikut adalah kode Python yang digunakan:
 
 ```python
@@ -162,7 +162,7 @@ Jumlah Data yang Duplikat : 0
 - Dari hasil diatas ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
 - Selain itu, tidak ditemukan duplikasi dari data yang digunakan.
  
-## 3.3 Pengecekan dan Penanganan Outlier
+## EDA - 3.3 Pengecekan dan Penanganan Outlier
 - Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 1
 ![image](https://github.com/user-attachments/assets/0ebca202-26fe-4d4c-81fa-a7847634b7a2)
 Gambar 1 Deteksi Outlier dengan Boxplot
