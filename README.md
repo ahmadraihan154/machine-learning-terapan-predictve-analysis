@@ -1,3 +1,10 @@
+<p align="right" style="font-size: 12px;">
+<i>Disclaimer: Referensi yang digunakan dapat dilihat pada bagian paling bawah tulisan. Setiap tulisan berwarna <span style="color:blue;">biru</span> merupakan tautan yang dapat diklik menuju sumber aslinya.</i>
+</p>
+
+# Nama : Ahmad Raihan
+# Project : Predictive Analysis - Klasifikasi Kualitas Apel
+
 # 1. Domain Proyek
 Adapun proyek ini membahas tentang predictive analysis dalam membangun sistem klasifikasi kualitas apel yang termasuk pada domain pertanian atau perkebunan. 
 
@@ -37,13 +44,13 @@ Adapun solusi yang akan diterapkan untuk menyelesaikan proyek ini yaitu:
 
      a. **Logistic Regression**: Merupakan model klasifikasi linier yang digunakan untuk memprediksi probabilitas dari dua atau lebih kelas. Model ini cocok digunakan ketika hubungan antar variabel input dan output bersifat linier. [[5](https://doi.org/10.62386/jised.v2i1.59 )].
 
-     b. **K-Nearest Neighbors (KNN)**: Algoritma klasifikasi berbasis distance-based learning yang mengklasifikasikan data baru berdasarkan kedekatannya dengan data pelatihan. KNN efektif dalam mendeteksi pola berdasarkan kemiripan antar sampel, dan telah diaplikasikan dalam berbagai studi kualitas produk pertanian [[6](https://doi.org/10.30591/jpit.v4i1.1267)].
+     b. **K-Nearest Neighbors (KNN)**: Algoritma klasifikasi berbasis distance-based learning yang mengklasifikasikan data baru berdasarkan kedekatannya dengan data pelatihan. KNN efektif dalam mendeteksi pola berdasarkan kemiripan antar sampel, dan telah diaplikasikan dalam berbagai studi [[6](https://doi.org/10.30591/jpit.v4i1.1267)].
 
      c. **Support Vector Machine (SVM)**: SVM bekerja dengan mencari hyperplane optimal yang memisahkan kelas-kelas dalam ruang berdimensi tinggi. Algoritma ini terkenal efektif dalam menangani data dengan dimensi besar dan distribusi kompleks [[7](http://dx.doi.org/10.23960/jitet.v12i2.4010)].
 
      d. **Decision Tree**: Merupakan algoritma berbasis pohon keputusan yang memetakan data ke dalam struktur pohon, memudahkan interpretasi dan pengambilan keputusan. Model ini cocok untuk aplikasi pertanian karena transparan dan mudah diimplementasikan [[8](https://doi.org/10.26418/coding.v9i01.45907	)].
 
-     e. **Random Forest**: Ensemble learning method yang membangun banyak decision tree dan menggabungkan hasilnya untuk meningkatkan akurasi prediksi dan mengurangi overfitting. Random Forest sering digunakan dalam klasifikasi produk pertanian karena ketahanannya terhadap noise dan kemampuan menangani variabel yang kompleks [[9](	https://doi.org/10.36040/jati.v9i2.12854 )].
+     e. **Random Forest**: Ensemble learning method yang membangun banyak decision tree dan menggabungkan hasilnya untuk meningkatkan akurasi prediksi dan mengurangi overfitting. Random Forest sering digunakan dalam klasifikasi karena ketahanannya terhadap noise dan kemampuan menangani variabel yang kompleks [[9](	https://doi.org/10.36040/jati.v9i2.12854 )].
 
 4. Membangun model baseline dan melakukan optimasi hyperparameter menggunakan Grid Search untuk seluruh algoritma yang digunakan. Setiap model akan dibuat terlebih dahulu dalam bentuk baseline untuk melihat performa awalnya. Setelah itu, dilakukan tuning hyperparameter menggunakan teknik Grid Search guna meningkatkan akurasi dan kestabilan model. Hasil dari model-model yang telah dioptimasi ini kemudian akan dibandingkan berdasarkan **metrik evaluasi seperti akurasi, precision, recall, dan f1-score**, untuk menentukan model terbaik yang paling sesuai digunakan dalam klasifikasi kualitas apel.
 
@@ -74,15 +81,15 @@ Tabel 1. Gambaran Data yang digunakan
 | 4.0 | 1.364217 |-1.296612 | -0.384658 | -0.553006 | 3.030874 | -1.303849	| 0.501984036  |good |
 
 - Dari Tabel 1 di atas terlihat bahwa ada 9 buah kolom/variabel yang digunakan:
-  1. `A_id` : identifier unik untuk setiap buah
-  1. `Size` : Ukuran buah
-  1. `Weight` : Berat buah
-  1. `Sweetness` : Tingkat kemanisan buah
-  1. `Crunchiness` : Tekstur yang menunjukkan kerenyahan buah
-  1.` Juiciness` : Tingkat kesegaran buah
-  1. `Ripeness` : Tahap kematangan buah
-  1. `Acidity` : Tingkat keasaman buah
-  1. `Quality` : Kualitas buah secara keseluruhan (label/target)
+  - `A_id` : identifier unik untuk setiap buah
+  - `Size` : Ukuran buah
+  - `Weight` : Berat buah
+  - `Sweetness` : Tingkat kemanisan buah
+  - `Crunchiness` : Tekstur yang menunjukkan kerenyahan buah
+  - ` Juiciness` : Tingkat kesegaran buah
+  - `Ripeness` : Tahap kematangan buah
+  - `Acidity` : Tingkat keasaman buah
+  - `Quality` : Kualitas buah secara keseluruhan (label/target)
 
 Tabel 2. Informasi Umum dari Dataset 
 | No | Kolom        | Non-Null Count | Dtype   |
@@ -104,7 +111,7 @@ Jumlah entri: 4000 (index dari 0 sampai 3999)
 - Dari Tabel 2 juga dapat dilihat informasi umum dari dataset yang digunakan
   - Terdapat 6 kolom numerik dengan tipe data `float64`, yaitu: **Size, Weight, Sweetness, Crunchiness, Juiciness**, dan **Ripeness**.
   - Terdapat 2 kolom bertipe data `object`, yaitu: **Acidity** dan **Quality**.
-  - Terdapat keanehan pada kolom `Acidity` yang bertipe `object`, padahal secara semantik kolom ini menunjukkan tingkat keasaman buah yang seharusnya bersifat numerik.
+  - Terdapat keanehan pada kolom `Acidity` yang bertipe `object`, padahal secara isi kolom ini menunjukkan tingkat keasaman buah yang seharusnya bersifat numerik.
   - Oleh karena itu, kolom `Acidity` sebaiknya diubah ke tipe data `float64` agar dapat dianalisis secara kuantitatif dan digunakan dalam model machine learning.
 
 Tabel 3 Informasi Statistik dari Dataset
@@ -212,8 +219,10 @@ print(f'Jumlah data yang duplikat : {apple_df.duplicated().sum()}')
 |------|------|--------|-----------|-------------|-----------|----------|----------------------------------|---------|
 | NaN  | NaN  | NaN    | NaN       | NaN         | NaN       | NaN      | Created_by_Nidula_Elgiriyewithana | NaN     |
 
+Jumlah Data yang Duplikat : 0
 
 - Dari hasil diatas ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
+- Selain itu, tidak ditemukan duplikasi dari data yang digunakan.
  
 ## 4.2 Pengecekan dan Penanganan Outlier
 - Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 5
@@ -270,10 +279,6 @@ Pada tahap ini dilakukan proses normalisasi data menggunakan Min-Max Scaling.  N
 Algoritma machine learning yang diguanakan pada proyek ini ada 5 yaitu sebagai berikut:
 
 ## 5.1 Logistic Regression
-### Logistic Regression
-
-## 5.3 Logistic Regression
-
 Logistic Regression adalah algoritma supervised learning yang digunakan untuk tugas **klasifikasi**, terutama klasifikasi biner. Algoritma ini bekerja dengan memodelkan hubungan antara fitur dan probabilitas kelas menggunakan fungsi logistik (sigmoid), sehingga hasil prediksi berada dalam rentang 0 hingga 1.
 
 Dalam proyek ini, model Logistic Regression dikembangkan menggunakan pencarian hyperparameter melalui **Grid Search**, dengan kombinasi parameter sebagai berikut:
@@ -387,9 +392,9 @@ Dalam proyek ini, model Random Forest dikembangkan menggunakan pencarian hyperpa
 - Interpretasi model sulit karena banyaknya pohon yang digunakan.
 - Tidak selalu optimal untuk prediksi real-time karena ukuran model yang besar.
 
-## 5.6 Pemilihan Model Terbaik
+## 5.6 Metode Pemilihan Model Terbaik
 
-Pemilihan model terbaik dilakukan pada tahap evaluasi dengan membandingkan performa seluruh model yang telah dibangun. Proses ini dilakukan dalam dua tahap, yaitu:
+**Pemilihan model terbaik dilakukan pada tahap evaluasi** dengan membandingkan performa seluruh model yang telah dibangun. Proses ini dilakukan dalam dua tahap, yaitu:
 
 1. **Evaluasi Awal (Baseline Model)**  
    Semua model diuji menggunakan parameter default untuk memperoleh gambaran awal performa masing-masing. Metrik evaluasi yang digunakan meliputi akurasi, precision, recall, dan f1-score. Hasil dari tahap ini menjadi dasar dalam menentukan arah tuning selanjutnya.
@@ -398,3 +403,133 @@ Pemilihan model terbaik dilakukan pada tahap evaluasi dengan membandingkan perfo
    Model-model yang telah menunjukkan performa awal yang baik kemudian ditingkatkan melalui proses hyperparameter tuning menggunakan Grid Search. Tujuannya adalah untuk mengoptimalkan performa model berdasarkan metrik evaluasi yang sama seperti sebelumnya.
 
 Model dengan performa terbaik secara konsisten baik sebelum maupun setelah tuning, serta memiliki keseimbangan antara metrik-metrik evaluasi (tidak hanya akurasi tinggi, tetapi juga precision dan recall yang baik), dipilih sebagai model akhir yang akan digunakan dalam sistem klasifikasi kualitas apel ini.
+
+# 6. Evaluasi Model
+Pada tahap evaluasi model, digunakan beberapa metrik evaluasi yang umum dalam permasalahan klasifikasi untuk menilai performa model. Metrik-metrik yang digunakan meliputi:
+
+## 6.1 Accuracy
+Mengukur proporsi prediksi yang benar terhadap total data.
+- **Rumus:**
+
+$$
+\text{Accuracy} = \frac{\text{TP + TN}}{\text{TP + TN + FP + FN}}
+$$
+
+Cara kerja accuracy khususnya pada proyek ini adalah menunjukkan seberapa banyak apel yang berhasil diklasifikasikan dengan benar, baik sebagai "baik" maupun "buruk", dibandingkan dengan total jumlah apel. Rumus ini memecah akurasi menjadi rasio antara data yang diklasifikasikan dengan benar (TP dan TN) dengan jumlah total data. Nilai akurasi dapat dikonversi menjadi persentase untuk interpretasi yang lebih mudah.
+
+## 6.2 Precision
+Mengukur seberapa akurat prediksi positif yang dilakukan oleh model.
+- **Rumus:**
+
+
+$$
+\text{Precision} = \frac{\text{TP}}{\text{TP + FP}}
+$$
+
+Cara kerja precision khususnya dalam proyek ini adalah mengukur seberapa banyak apel yang diprediksi sebagai "baik" oleh model ternyata benar-benar apel yang berkualitas baik. Metrik ini penting jika kita ingin meminimalisir kesalahan saat menyatakan apel itu bagus (agar tidak salah jual apel jelek sebagai bagus). Rumus ini memecah precision menjadi rasio antara jumlah prediksi benar sebagai positif (TP) dibandingkan seluruh prediksi positif (TP + FP).
+
+## 6.3 Recall
+Mengukur seberapa banyak data positif yang berhasil ditemukan oleh model.
+- **Rumus:**
+
+$$
+\text{Recall} = \frac{\text{TP}}{\text{TP + FN}}
+$$
+
+ Recall dalam proyek ini bekerja dengan menunjukkan kemampuan model dalam menemukan semua apel yang benar-benar baik dari seluruh data apel baik yang tersedia. Nilai recall tinggi penting jika tujuan kita adalah mengidentifikasi sebanyak mungkin apel berkualitas baik, walaupun ada risiko memprediksi beberapa apel jelek sebagai bagus. Rumus ini memecah recall menjadi rasio antara jumlah data positif yang berhasil ditemukan (TP) dibandingkan seluruh data positif sebenarnya (TP + FN). 
+
+## 6.4 F1-Score
+Mengukur rata-rata harmonis antara Precision dan Recall, digunakan saat kita ingin keseimbangan antara keduanya.
+- **Rumus:**
+
+$$
+\text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision + Recall}}
+$$
+
+Dalam proyek ini, F1-Score digunakan untuk mendapatkan metrik gabungan yang seimbang antara Precision dan Recall Cocok digunakan ketika penting untuk meminimalkan baik kesalahan dalam memprediksi apel jelek sebagai bagus, maupun melewatkan apel yang sebenarnya bagus. Rumus ini memecah f1-score menjadi rata-rata harmonis dari precision dan recall.
+
+### Keterangan:
+- **TP (True Positive):** Data positif yang diprediksi dengan benar sebagai positif.
+- **TN (True Negative):** Data negatif yang diprediksi dengan benar sebagai negatif.
+- **FP (False Positive):** Data negatif yang salah diprediksi sebagai positif (Kesalahan Tipe I).
+- **FN (False Negative):** Data positif yang salah diprediksi sebagai negatif (Kesalahan Tipe II).
+
+---
+
+## 6.5 Hasil Performa Model
+
+#### Sebelum Tuning Hyperparameter
+- Adapun hasil dari pelatihan model setelah tuning hyperparameter disajikan pada Tabel 5 dibawah:
+  
+Tabel 5 Hasil Peforma Model Sebelum Tuning
+
+| Model                   | Test Accuracy | Test Precision | Test Recall | Test F1-Score |
+|-------------------------|---------------|----------------|-------------|---------------|
+| Logistic Regression     | 0.761214      | 0.780220       | 0.737662    | 0.758344      |
+| K-Nearest Neighbors     | 0.886544      | 0.914127       | 0.857143    | 0.884718      |
+| SVM                     | 0.889182      | 0.910082       | 0.867532    | 0.888298      |
+| Decision Tree           | 0.782322      | 0.803867       | 0.755844    | 0.779116      |
+| Random Forest           | 0.883905      | 0.904632       | 0.862338    | 0.882979      |
+
+---
+
+#### Setelah Tuning Hyperparameter
+- Adapun hasil dari pelatihan model setelah tuning hyperparameter disajikan pada Tabel 6 dibawah:
+  
+Tabel 6 Hasil Performa Model Setelah Tuning
+
+| Model                   | Test Accuracy | Test Precision | Test Recall | Test F1-Score |
+|-------------------------|---------------|----------------|-------------|---------------|
+| Logistic Regression     | 0.762533      | 0.780822       | 0.740260    | 0.760000      |
+| K-Nearest Neighbors     | 0.910290      | 0.939058       | 0.880519    | 0.908847      |
+| SVM                     | 0.915567      | 0.934959       | 0.896104    | 0.915119      |
+| Decision Tree           | 0.812665      | 0.840336       | 0.779221    | 0.808625      |
+| Random Forest           | 0.893140      | 0.913043       | 0.872727    | 0.892430      |
+
+---
+
+![image](https://github.com/user-attachments/assets/e182e254-2c0f-4b2f-8dff-31aa011c51a2)
+
+Gambar 6 Visualisasi Akurasi Model Setelah Tuning 
+
+- Adapun insight yang didapatkan setelah melihat Tabel 5 dan 6 serta Gambar 6 adalah sebagai berikut:
+  - Seluruh model mengalami peningkatan pada metrik akurasi, precision, recall, dan F1-score setelah dilakukan tuning.
+   - Peningkatan performa paling signifikan terlihat pada:
+      - KNN, dengan akurasi meningkat dari 88.65% → 91.03%, serta peningkatan pada metrik lainnya.
+      - SVM, dengan akurasi meningkat dari 88.91% → 91.56%, disertai kenaikan presisi , recall dan F1-score yang tinggi.
+      - Decision Tree, dari 78.23% → 81.26%, dengan kenaikan pada metrik lainnya.
+  - Peningkatan yang relatif kecil terlihat pada:
+      - Random Forest, dengan akurasi naik dari 88.39% → 89.31%.
+      - Logistic Regression, dengan akurasi hanya meningkat sedikit dari 76.12% → 76.25%.
+
+  - Untuk mengatasi permasalahan pada dataset ini, model terbaik yang digunakan adalah Support Vector Classifier (SVC) dengan skor:
+    - Akurasi: 91.56%
+    - Precision: 93.49%
+    - Recall: 89.61%
+    - F1 Score: 91.51%
+
+## 6.6 Pemilihan Model Terbaik
+
+Pemilihan model terbaik dilakukan dengan membandingkan seluruh metrik evaluasi: **Accuracy, Precision, Recall, dan F1-Score**, baik sebelum maupun setelah tuning hyperparameter.
+
+Berdasarkan hasil evaluasi, model **Support Vector Machine (SVM)** menunjukkan performa paling konsisten dan unggul di seluruh metrik setelah tuning:
+- **Accuracy:** 91.56%
+- **Precision:** 93.50%
+- **Recall:** 89.61%
+- **F1-Score:** 91.51%
+
+Dengan keunggulan di keempat metrik tersebut, **SVM dipilih sebagai model terbaik** dalam proyek ini karena mampu memberikan performa tinggi dan seimbang dalam mengklasifikasi data apel berdasarkan kualitasnya.
+
+---
+
+# Referensi
+--
+1. Purnomo, I. I., & Syafarina, G. A. (2024). Analisis Prediktif Dan Preprocessing Untuk Kualitas Buah Apel Pendekatan Machine Learning. Technologia: Jurnal Ilmiah, 15(4), 681-687.
+2. Mahmudan.(2024). Produksi Apel Malang Terus Menurun .
+3. Pamungkasih, E., Ristanti, R. F., Ramayanti, K., & Arini, I. Y. (2023, September). Strategi Pengembangan Komoditas Buah Apel di Kabupaten Malang. In Prosiding Seminar Nasional Pembangunan dan Pendidikan Vokasi Pertanian (Vol. 4, No. 1, pp. 105-113).
+4. Afriansyah, M., Saputra, J., Sa’adati, Y., & Ardhana, V. Y. P. (2023). Optimasi Algoritma Nai? ve Bayes Untuk Klasifikasi Buah Apel Berdasarkan Fitur Warna RGB. Bulletin of Computer Science Research, 3(3), 242-249.
+5. Honestya, G., Sajida, M., & Ramadhanu, A. (2024). Klasifikasi Jenis Daun Herbal Klasifikasi Jenis Daun Herbal Menggunakan Metode Logistic Regression dan Decision Tree Classifier Berdasarkan Fitur (Warna dan Bentuk). Journal of Information System and Education Development, 2(1), 52-55.
+6. Paramita, C., Rachmawanto, E. H., Sari, C. A., & Setiadi, D. R. I. M. (2019). Klasifikasi Jeruk Nipis Terhadap Tingkat Kematangan Buah Berdasarkan Fitur Warna Menggunakan K-Nearest Neighbor. Jurnal Informatika: Jurnal Pengembangan IT, 4(1), 1-6.
+7. Muchtar, M., & Muchtar, R. A. (2024). Perbandingan metode KNN dan SVM dalam klasifikasi kematangan buah mangga berdasarkan citra HSV dan fitur statistik. Jurnal Informatika dan Teknik Elektro Terapan, 12(2).
+8. Robianto, R., Sitorus, S. H., & Ristian, U. (2021). Penerapan Metode Decision Tree Untuk Mengklasifikasikan Mutu Buah Jeruk Berdasarkan Fitur Warna Dan Ukuran. Coding Jurnal Komputer dan Aplikasi, 9(01), 76-86.
+9. Argadinata, A. P., Fatah, D. A., & Sukri, H. (2025). KLASIFIKASI KUALITAS BUAH APEL MENGGUNAKAN METODE RANDOM FOREST. JATI (Jurnal Mahasiswa Teknik Informatika), 9(2), 2016-2022.
