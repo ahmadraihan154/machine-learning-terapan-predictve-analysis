@@ -158,6 +158,7 @@ Gambar 2 Histogram dari Persebaran Masing-Masing Data
 - Pertama, digunakan heatmap korelasi untuk melihat sejauh mana fitur-fitur numerik saling berkorelasi. Tujuannya adalah untuk mengidentifikasi kemungkinan adanya multikolinearitas, yaitu kondisi di mana dua atau lebih fitur memiliki korelasi yang sangat tinggi, yang dapat memengaruhi performa model prediktif.
 
 ![image](https://github.com/user-attachments/assets/5ddb582d-a9f9-400d-a002-218cf6a2ea5b)
+
 Gambar 3 Heatmap Korelasi antar Fitur Numerik
 
 - Insight yang didapatkan dari Gambar 3:
@@ -187,10 +188,8 @@ Tabel 4 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
 - Pada tahap ini, dilakukan serangkaian proses untuk menyiapkan data mentah agar dapat digunakan dalam pembuatan model prediktif. Beberapa langkah penting yang dilakukan dalam proses Data Preparation meliputi:
 
 - **Missing Value (Data yang Hilang)**:  Dilakukan pengecekan terhadap setiap kolom untuk mengetahui apakah terdapat nilai yang hilang.
-- 
-  - **Duplicated Data (Data Duplikat)**: Data duplikat dicek untuk memastikan tidak ada entri yang berulang yang dapat menyebabkan bias dalam pelatihan model. 
-
-  - **Outlier (Nilai Pencilan)**:  Outlier adalah data yang secara signifikan berbeda dari mayoritas nilai lainnya. Outlier dapat mempengaruhi performa model, terutama pada model yang sensitif terhadap skala data seperti K-Nearest Neighbors (KNN) atau Linear Regression. Deteksi outlier akan dilakukan menggunakan metode statistik seperti:
+- **Duplicated Data (Data Duplikat)**: Data duplikat dicek untuk memastikan tidak ada entri yang berulang yang dapat menyebabkan bias dalam pelatihan model. 
+- **Outlier (Nilai Pencilan)**:  Outlier adalah data yang secara signifikan berbeda dari mayoritas nilai lainnya. Outlier dapat mempengaruhi performa model, terutama pada model yang sensitif terhadap skala data seperti K-Nearest Neighbors (KNN) atau Linear Regression. Deteksi outlier akan dilakukan menggunakan metode statistik seperti:
     - Boxplot untuk visualisasi distribusi data.
     - Z-score/IQR (Interquartile Range) untuk identifikasi nilai ekstrem.  
     Jika ditemukan outlier, penanganan yang dapat dilakukan antara lain:
@@ -208,11 +207,13 @@ apple_df.isnull().sum()
 print(f'Jumlah data yang duplikat : {apple_df.duplicated().sum()}')
 ```
 - Hasilnya:
-| A_id | Size | Weight | Sweetness | Crunchiness | Juiciness | Ripeness | Acidity | Quality |
-| ------ | ------ |------ | ------ | ------ | ------ |------ | ------ |------ |
-| NaN | NaN | NaN | NaN |NaN | NaN| NaN	| Created_by_Nidula_Elgiriyewithana  | NaN |
 
-- Hasilnya ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
+| A_id | Size | Weight | Sweetness | Crunchiness | Juiciness | Ripeness | Acidity                          | Quality |
+|------|------|--------|-----------|-------------|-----------|----------|----------------------------------|---------|
+| NaN  | NaN  | NaN    | NaN       | NaN         | NaN       | NaN      | Created_by_Nidula_Elgiriyewithana | NaN     |
+
+
+- Dari hasil diatas ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
  
 ## 4.2 Pengecekan dan Penanganan Outlier
 - Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 5
@@ -248,18 +249,152 @@ Pada kasus ini:
 - **Label**:  
   - `Quality`, karena merupakan target klasifikasi kualitas apel (baik/buruk)
 
-Namun sebelum data dibagi ke dalam data latih dan data uji, perlu dilakukan proses **encoding** terhadap kolom `Quality` karena tipe datanya masih berupa `object` (string), yaitu `"good"` dan `"bad"`. Model machine learning hanya dapat menerima input dalam bentuk numerik, sehingga perlu dilakukan konversi label ke bentuk bilangan bulat.
+## 4.4 Encoding
+Sebelum data dibagi ke dalam data latih dan data uji, perlu dilakukan proses **encoding** terhadap kolom `Quality` karena tipe datanya masih berupa `object` (string), yaitu `"good"` dan `"bad"`. Model machine learning hanya dapat menerima input dalam bentuk numerik, sehingga perlu dilakukan konversi label ke bentuk bilangan bulat.
 
 - Proses encoding:
   - `good` → `1`
   - `bad` → `0`
 
-## 4.4 Membagi Data
+## 4.5 Membagi Data
 Tahap berikutnya adalah membagi data menjadi data latih dan data uji dengan rasio 80:20. Pembagian ini penting untuk memastikan bahwa model tidak hanya belajar dari keseluruhan data tetapi juga diuji pada data yang belum pernah dilihat sebelumnya, sehingga performanya dapat dievaluasi secara objektif.
 
 Jumlah data awal yang tersedia adalah 3790 baris. Setelah dilakukan pembagian data:
   - Data latih (train set): 3.032 data (80%)
 - Data uji (test set): 758 data (20%)
 
-## 4.5 Feature Scaling
+## 4.6 Feature Scaling
 Pada tahap ini dilakukan proses normalisasi data menggunakan Min-Max Scaling.  Normalisasi dilakukan dikarenakan proyek ini  akan menggunakan model berbasis jarak seperti K-Nearest Neighbors (KNN), Support Vector Machine (SVM), dan juga Logistic Regression, di mana performa model tersebut akan lebih optimal jika setiap fitur berada dalam rentang skala 0 hingga 1.
+
+# 5. Modeling
+Algoritma machine learning yang diguanakan pada proyek ini ada 5 yaitu sebagai berikut:
+
+## 5.1 Logistic Regression
+### Logistic Regression
+
+## 5.3 Logistic Regression
+
+Logistic Regression adalah algoritma supervised learning yang digunakan untuk tugas **klasifikasi**, terutama klasifikasi biner. Algoritma ini bekerja dengan memodelkan hubungan antara fitur dan probabilitas kelas menggunakan fungsi logistik (sigmoid), sehingga hasil prediksi berada dalam rentang 0 hingga 1.
+
+Dalam proyek ini, model Logistic Regression dikembangkan menggunakan pencarian hyperparameter melalui **Grid Search**, dengan kombinasi parameter sebagai berikut:
+
+- `penalty`: Jenis regularisasi yang digunakan untuk mengurangi overfitting. Dalam hal ini digunakan `'elasticnet'`, yaitu kombinasi antara L1 (Lasso) dan L2 (Ridge).
+- `C`: Parameter regularisasi inverse yang mengontrol kekuatan regularisasi, dengan nilai antara **0.001 hingga 1000** dalam skala logaritmik.
+- `solver`: Algoritma optimasi yang digunakan, yaitu `'saga'`, yang mendukung penalti `elasticnet` dan bekerja efisien pada dataset besar.
+- `l1_ratio`: Rasio antara regulasi L1 dan L2 dalam `elasticnet`, dengan nilai antara **0 hingga 1**.
+
+#### Kelebihan Logistic Regression:
+- Dapat digunakan untuk klasifikasi biner maupun multi-kelas.
+- Cepat dan efisien pada dataset berskala besar.
+- Memberikan hasil dalam bentuk probabilitas, berguna untuk analisis keputusan.
+
+#### Kelemahan Logistic Regression:
+- Asumsi hubungan linier antara fitur dan logit menjadikannya kurang cocok untuk data dengan pola non-linear.
+- Sensitif terhadap multikolinearitas dan outlier.
+- Memerlukan scaling pada fitur agar performa optimal.
+
+## 5.2 K-Nearest Neighbors (KNN)
+K-Nearest Neighbors (KNN) adalah algoritma supervised learning yang digunakan untuk tugas klasifikasi maupun regresi.  Algoritma ini memprediksi data baru dengan cara melihat sejumlah **k tetangga terdekat** berdasarkan jarak, kemudian mengambil keputusan berdasarkan label mayoritas (klasifikasi) atau nilai rata-rata (regresi).
+
+Dalam proyek ini, model KNN dikembangkan menggunakan pencarian hyperparameter melalui **Grid Search**, dengan kombinasi parameter sebagai berikut:
+
+- `n_neighbors`: Jumlah tetangga terdekat yang dipertimbangkan, dengan nilai antara **2 hingga 10**.
+- `weights`: Metode pembobotan tetangga, terdiri dari:
+  - `'uniform'`: Semua tetangga memiliki bobot yang sama.
+  - `'distance'`: Tetangga yang lebih dekat memiliki bobot lebih besar.
+- `metric`: Metode perhitungan jarak, yaitu:
+  - `'euclidean'` (jarak lurus/Eucledian distance)
+  - `'manhattan'` (jarak kota/blok)
+- `p`: Parameter daya dalam perhitungan jarak Minkowski, dengan nilai:
+  - `1`: Sama dengan Manhattan Distance
+  - `2`: Sama dengan Euclidean Distance
+
+#### Kelebihan KNN:
+- Dapat digunakan untuk klasifikasi dan regresi.
+- Konsep dan implementasinya sederhana serta mudah dipahami.
+
+#### Kelemahan KNN:
+- Performa menurun pada dataset besar karena komputasi jarak dilakukan terhadap seluruh data latih.
+- Rentan terhadap noise dan outlier.
+- Pemilihan nilai `k` dan metrik jarak yang tepat memerlukan eksperimen dan tuning.
+
+## 5.3 Support Vectory Machine (SVM)
+Support Vector Machine (SVM) adalah algoritma supervised learning yang digunakan untuk tugas klasifikasi maupun regresi. SVM bekerja dengan mencari **hyperplane terbaik** yang memisahkan kelas-kelas data dengan margin maksimum. Dalam ruang berdimensi tinggi, SVM tetap efektif berkat penggunaan kernel trick.
+
+Dalam proyek ini, model SVM dikembangkan menggunakan pencarian hyperparameter melalui **Grid Search**, dengan kombinasi parameter sebagai berikut:
+
+- `C`: Parameter regulasi yang mengontrol trade-off antara margin maksimum dan kesalahan klasifikasi. Nilai yang digunakan adalah **0.1, 1, 10, dan 100**.
+- `gamma`: Parameter yang menentukan seberapa jauh pengaruh satu data train terhadap lainnya. Digunakan dua opsi yaitu:
+  - `'scale'`: Default berdasarkan jumlah fitur.
+  - `'auto'`: Berdasarkan jumlah sampel.
+- `kernel`: Fungsi kernel yang menentukan bentuk hyperplane. Digunakan dua jenis:
+  - `'rbf'` (Radial Basis Function): Cocok untuk data non-linear.
+  - `'linear'`: Untuk data yang dapat dipisahkan secara linear.
+
+#### Kelebihan SVM:
+- Efektif pada data berdimensi tinggi dan kasus dengan margin yang jelas.
+- Dapat digunakan untuk klasifikasi linear maupun non-linear dengan bantuan kernel.
+- Relatif tahan terhadap overfitting, terutama pada dataset dengan fitur banyak.
+
+#### Kelemahan SVM:
+- Waktu pelatihan bisa lama pada dataset besar.
+- Pemilihan kernel dan parameter yang tepat sangat krusial untuk performa model.
+- Tidak menghasilkan probabilitas secara langsung, kecuali menggunakan metode tambahan (seperti `probability=True`).
+
+## 5.4 Decision Tree
+
+Decision Tree adalah algoritma supervised learning yang digunakan untuk tugas klasifikasi maupun regresi. Algoritma ini membagi data ke dalam cabang-cabang berdasarkan fitur tertentu dengan tujuan memisahkan kelas target secara optimal. Proses pemisahan dilakukan secara rekursif hingga mencapai kondisi tertentu.
+
+Dalam proyek ini, model Decision Tree dikembangkan menggunakan pencarian hyperparameter melalui **Grid Search**, dengan kombinasi parameter sebagai berikut:
+
+- `max_depth`: Kedalaman maksimum pohon keputusan. Nilai yang digunakan adalah **3, 5, 10, dan None** (tanpa batasan).
+- `min_samples_split`: Jumlah minimum sampel yang diperlukan untuk membagi sebuah node. Nilai yang digunakan adalah **2, 5, dan 10**.
+- `min_samples_leaf`: Jumlah minimum sampel yang diperlukan pada sebuah daun (leaf node). Nilai yang digunakan adalah **1, 2, dan 4**.
+- `criterion`: Fungsi untuk mengukur kualitas split. Digunakan dua jenis:
+  - `'gini'`: Impurity Gini.
+  - `'entropy'`: Informasi Entropi.
+
+#### Kelebihan Decision Tree:
+- Mudah dipahami dan divisualisasikan.
+- Tidak memerlukan normalisasi atau standardisasi fitur.
+- Dapat menangani data numerik dan kategorikal.
+
+#### Kelemahan Decision Tree:
+- Cenderung overfitting, terutama pada pohon yang terlalu dalam.
+- Performa bisa tidak stabil jika terdapat perubahan kecil pada data.
+- Kurang optimal untuk model prediksi kompleks dibanding ensemble methods seperti Random Forest.
+
+## 5.5 Random Forest
+Random Forest adalah algoritma ensemble learning yang digunakan untuk tugas klasifikasi maupun regresi. Algoritma ini membangun **beberapa pohon keputusan (decision trees)** dan menggabungkan hasilnya (melalui voting atau rata-rata) untuk meningkatkan akurasi dan mengurangi overfitting.
+
+Dalam proyek ini, model Random Forest dikembangkan menggunakan pencarian hyperparameter melalui **Grid Search**, dengan kombinasi parameter sebagai berikut:
+
+- `n_estimators`: Jumlah pohon keputusan yang dibangun dalam model. Nilai yang digunakan adalah **50, 100, dan 150**.
+- `max_depth`: Kedalaman maksimum setiap pohon. Nilai yang digunakan adalah **None, 5, dan 10**.
+- `min_samples_split`: Jumlah minimum sampel yang diperlukan untuk membagi sebuah node. Nilai yang digunakan adalah **2 dan 5**.
+- `min_samples_leaf`: Jumlah minimum sampel yang diperlukan pada sebuah daun (leaf node). Nilai yang digunakan adalah **1 dan 2**.
+- `criterion`: Fungsi untuk mengukur kualitas split. Digunakan dua jenis:
+  - `'gini'`: Impurity Gini.
+  - `'entropy'`: Informasi Entropi.
+
+#### Kelebihan Random Forest:
+- Mengurangi overfitting dibandingkan dengan pohon tunggal.
+- Mampu menangani data dalam jumlah besar dan berdimensi tinggi.
+- Robust terhadap missing values dan outlier.
+
+#### Kelemahan Random Forest:
+- Lebih kompleks dan memakan waktu dibandingkan pohon tunggal.
+- Interpretasi model sulit karena banyaknya pohon yang digunakan.
+- Tidak selalu optimal untuk prediksi real-time karena ukuran model yang besar.
+
+## 5.6 Pemilihan Model Terbaik
+
+Pemilihan model terbaik dilakukan pada tahap evaluasi dengan membandingkan performa seluruh model yang telah dibangun. Proses ini dilakukan dalam dua tahap, yaitu:
+
+1. **Evaluasi Awal (Baseline Model)**  
+   Semua model diuji menggunakan parameter default untuk memperoleh gambaran awal performa masing-masing. Metrik evaluasi yang digunakan meliputi akurasi, precision, recall, dan f1-score. Hasil dari tahap ini menjadi dasar dalam menentukan arah tuning selanjutnya.
+
+2. **Evaluasi Setelah Hyperparameter Tuning**  
+   Model-model yang telah menunjukkan performa awal yang baik kemudian ditingkatkan melalui proses hyperparameter tuning menggunakan Grid Search. Tujuannya adalah untuk mengoptimalkan performa model berdasarkan metrik evaluasi yang sama seperti sebelumnya.
+
+Model dengan performa terbaik secara konsisten baik sebelum maupun setelah tuning, serta memiliki keseimbangan antara metrik-metrik evaluasi (tidak hanya akurasi tinggi, tetapi juga precision dan recall yang baik), dipilih sebagai model akhir yang akan digunakan dalam sistem klasifikasi kualitas apel ini.
