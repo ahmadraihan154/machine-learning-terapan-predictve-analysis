@@ -100,11 +100,11 @@ Tabel 2. Informasi Umum dari Dataset
 | 3  | Crunchiness  | 4000           | float64 |
 | 4  | Juiciness    | 4000           | float64 |
 | 5  | Ripeness     | 4000           | float64 |
-| 6  | Acidity      | 4000           | object  |
+| 6  | Acidity      | 4001           | object  |
 | 7  | Quality      | 4000           | object  |
 
 Tipe data: float64 (6), object (2)  
-Jumlah entri: 4000 (index dari 0 sampai 3999)
+Jumlah entri: 4001 (index dari 0 sampai 4000)
 
 ---
 
@@ -113,6 +113,7 @@ Jumlah entri: 4000 (index dari 0 sampai 3999)
   - Terdapat 2 kolom bertipe data `object`, yaitu: **Acidity** dan **Quality**.
   - Terdapat keanehan pada kolom `Acidity` yang bertipe `object`, padahal secara isi kolom ini menunjukkan tingkat keasaman buah yang seharusnya bersifat numerik.
   - Oleh karena itu, kolom `Acidity` sebaiknya diubah ke tipe data `float64` agar dapat dianalisis secara kuantitatif dan digunakan dalam model machine learning.
+  -  Terdapat kolom A_id yang hanyalah sekedar identifier sehingga perlu dihapus.
 
 Tabel 3 Informasi Statistik dari Dataset
 
@@ -124,7 +125,6 @@ Tabel 3 Informasi Statistik dari Dataset
 | Crunchiness  | 4000.0 | 0.985478  | 1.402757  | -6.055058 | 0.062764  | 0.998249  | 1.894234  | 7.619852  |
 | Juiciness    | 4000.0 | 0.512118  | 1.930286  | -5.961897 | -0.801286 | 0.534219  | 1.835976  | 7.364403  |
 | Ripeness     | 4000.0 | 0.498277  | 1.874427  | -5.864599 | -0.771677 | 0.503445  | 1.766212  | 7.237837  |
-| Acidity      | 4000.0 | 0.076877  | 2.110270  | -7.010538 | -1.377424 | 0.022609  | 1.510493  | 7.404736  |
 
 - Berdasarkan informasi statistik yang tersedia, kemungkinan besar dataset ini telah mengalami proses standarisasi, karena nilai-nilai numeriknya berada dalam rentang yang sempit dan simetris, dari negatif ke positif.
 - Jika kolom (variabel) tersebut merepresentasikan nilai asli (misalnya berat atau ukuran apel), maka kehadiran nilai negatif akan kurang masuk akal. Hal ini semakin menguatkan dugaan bahwa data telah distandarisasi.
@@ -139,49 +139,63 @@ Tabel 4 Penjelasan Informasi Statistik Dataset
 | **Crunchiness** | ✅ Ya     | ⚠️ Ya     | Kerennyan apel dapat berbeda-beda. Nilai ekstrem bisa mengindikasikan apel yang sangat renyah atau sangat lembek. |
 | **Juiciness** | ✅ Ya       | ⚠️ Ya     | Beberapa apel memang lebih juicy dari yang lain. Nilai ekstrim bisa muncul dari perbedaan jenis apel. |
 | **Ripeness**  | ✅ Ya       | ⚠️ Ya     | Tingkat kematangan bisa sangat bervariasi. Nilai ekstrem bisa muncul dari apel yang belum atau terlalu matang. |
-| **Acidity**   | ✅ Ya       | ⚠️ Ya     | Tingkat keasaman berbeda antar jenis apel. Nilai tinggi atau rendah bukan hal aneh, tapi tetap bisa dianggap outlier secara statistik. |
 
-## 3.2 EDA - Pengecekan dan Penanganan Missing Value dan Data Duplikat
-Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`missing value`) atau data yang berulang (`duplicated data`). Berikut adalah kode Python yang digunakan:
+- **Saran dari hasil pengecekan Tahapan ini**:
+  1. Menghapus Kolom A_id
+  2. Mengubah tipe data acidity dari object ke float64
+
+- Saran ini akan dilakukan pada tahap **data preparation**   
+
+## 3.2 EDA - Pengecekan Missing Value 
+Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`missing value`). 
 
 ```python
 # Cek kolom dengan data yang hilang
 apple_df.isnull().sum()
-
-# Cek jumlah data yang duplikat
-print(f'Jumlah data yang duplikat : {apple_df.duplicated().sum()}')
 ```
 - Hasilnya:
 
-| A_id | Size | Weight | Sweetness | Crunchiness | Juiciness | Ripeness | Acidity                          | Quality |
-|------|------|--------|-----------|-------------|-----------|----------|----------------------------------|---------|
-| NaN  | NaN  | NaN    | NaN       | NaN         | NaN       | NaN      | Created_by_Nidula_Elgiriyewithana | NaN     |
+| Column      | Missing Values |
+|-------------|----------------|
+| A_id        | 1              |
+| Size        | 1              |
+| Weight      | 1              |
+| Sweetness   | 1              |
+| Crunchiness | 1              |
+| Juiciness   | 1              |
+| Ripeness    | 1              |
+| Acidity     | 0              |
+| Quality     | 1              |
+
+Index| A_id | Size | Weight | Sweetness | Crunchiness | Juiciness | Ripeness | Acidity                          | Quality |
+|------|------|--------|-----------|-------------|-----------|----------|----------------------------------|---------|-----|
+4000| NaN  | NaN  | NaN    | NaN       | NaN         | NaN       | NaN      | Created_by_Nidula_Elgiriyewithana | NaN     |
+
+- Dari hasil diatas ditemukan 1 data yang missing pada index ke-4000 yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
+
+## 3.3 EDA - Pengecekan Data Duplikat
+- Pengecekan data yang berulang (duplicated data) dilakukan agar memastikan data yang digunakan tidak duplikat, karena penggunaan data yang sama berulang kali dapat menyebabkan model mempelajari informasi yang tidak representatif, serta dapat menyebabkan bias pada hasil analisis dan model yang dibangun.
+- Berikut adalah kode Python yang digunakan:
+'''# Cek jumlah data yang duplikat
+print(f'Jumlah data yang duplikat : {apple_df.duplicated().sum()}')
+'''
+- Hasilnya:
 
 Jumlah Data yang Duplikat : 0
 
-- Dari hasil diatas ditemukan 1 data yang missing yang perlu ditangani dimana salah satu caranya dengan menghapus data tersebut.
-- Selain itu, tidak ditemukan duplikasi dari data yang digunakan.
+- Dari hasil pengecekan yang dilakukan tidak ditemtukan data yang duplikat (sama).
  
-## 3.3 EDA - Pengecekan dan Penanganan Outlier
+## 3.4 EDA - Pengecekan Outlier
 - Adapun outlier ini akan dicek dengan menggunakan boxplot yang ditampilkan pada Gambar 1
 ![image](https://github.com/user-attachments/assets/0ebca202-26fe-4d4c-81fa-a7847634b7a2)
 Gambar 1 Deteksi Outlier dengan Boxplot
 
 - Insight yang didaptkan dari Gambar 1:
   - Berdasarkan grafik boxplot yang ditampilkan terlihat bahwa hanya semua fitur numerik yang memiliki outlier (ditandai dengan simbol bulat).
-  - Adapun untuk outlier yang ditemukan akan dilakukan penanganan dengan dihapus menggunakan metode IQR. IQR dihitung dengan mengurangkan kuartil ketiga (Q3) dari kuartil pertama (Q1) sebagaimana rumus berikut.
+  - Adapun untuk outlier yang ditemukan akan dilakukan penanganan dengan dihapus menggunakan metode IQR. 
 
-$$IQR = Q_3 - Q_1$$
-
-- Q1 adalah kuartil pertama 
-- Q3 adalah kuartil ketiga.
-
-- Setelah menangani outlier jumlah data berubah yang awalnya 4000 menjadi 3790 maka.
-  
-- **Setelah dilakukan pengecekan dan penghapusan nilai hilang, outlier, serta duplikat, data dapat dieksplorasi (EDA) lebih lanjut dengan hasil yang lebih bersih dan informatif, tanpa bias dari data yang tidak valid.**
-
-## 3.4 EDA - Univariate Analysis
-### 3.4.1 Categorical Column
+## 3.5 EDA - Univariate Analysis
+### 3.5.1 Categorical Column
 - Karena hanya ada satu kolom yaitu Quality (label/target) sehingga analisis hanya ingin melihat keseimbangannya menggunakan barplot.
 ![image](https://github.com/user-attachments/assets/05cafb03-d789-471c-a063-b0882c5aa235)
 Gambar 2 Barplot Perbandingan Kelas Kualitas Apel
@@ -190,7 +204,7 @@ Gambar 2 Barplot Perbandingan Kelas Kualitas Apel
   - Dari grafik yang diberikan terlihat bahwa kolom quality yang mana menjadi label/target seimbang sehingga tidak perlu dilakukan penanganan imbalance data.
   - Menjaga keseimbangan pada data penting agar model tidak bias ke salah satu kelas.
 
-### 3.4.2 Numerical Column
+### 3.5.2 Numerical Column
 - Untuk kolom numerik dilakukan analisis persebaran data menggunakan histogram untuk melihat apakah datanya terdistribusi normal, skewed, ataupun disribusi lainnya.
 ![image](https://github.com/user-attachments/assets/5162140f-23bb-4272-89a2-fd6283ae5526)
 Gambar 3 Histogram dari Persebaran Masing-Masing Data
@@ -198,8 +212,8 @@ Gambar 3 Histogram dari Persebaran Masing-Masing Data
 - Insight yang didapatkan dari Gambar 3:
   - Berdasarkan visualisasi histogram untuk fitur numerik seperti Size, Weight, Sweetness, Crunchiness, Juiciness, Ripeness, dan Acidity, dapat disimpulkan bahwa semua fitur memiliki bentuk distribusi yang mendekati normal (bell-shaped curve). Hal ini ditunjukkan oleh pola simetris di sekitar nilai tengah, dengan jumlah data yang semakin sedikit pada nilai ekstrem kiri dan kanan.
  
-## 3.5 EDA - Multivariate Analysis
-### 3.5.1 Numeric Columns
+## 3.6 EDA - Multivariate Analysis
+### 3.6.1 Numeric Columns
 - Pada tahap ini, dilakukan analisis multivariat untuk memahami hubungan antar fitur numerik dan keterkaitannya dengan label.
 - Pertama, digunakan heatmap korelasi untuk melihat sejauh mana fitur-fitur numerik saling berkorelasi. Tujuannya adalah untuk mengidentifikasi kemungkinan adanya multikolinearitas, yaitu kondisi di mana dua atau lebih fitur memiliki korelasi yang sangat tinggi, yang dapat memengaruhi performa model prediktif.
 
@@ -233,7 +247,31 @@ Tabel 5 Insight Pengaruh Kualitas Apel dengan Rata-Rata Fitur Numerik
 # 4. Data Preparation
 Pada tahap data preparation, setelah memahami kondisi data maka dilakukanlah preprocessing agar data tersebut dapat dilatih oleh model. Tahapannya dapat diikuti seperti dibawah:
 
-## 4.1 Mengidentifikasi Fitur dan Label
+## 4.1 Menghapus Kolom yang tidak sesuai
+- Dari hasil pengecekan terdapat kolom A_id yang perlu dihapus karena kolom ini hanyalah identifier dan tidak memberikan kontribusi informasi yang relevan terhadap proses klasifikasi kualitas apel, sehingga penghapusannya penting untuk mencegah model belajar dari pola yang tidak bermakna selama proses pelatihan.
+
+## 4.2 Penanganan Missing Value (Nilai yang hilang)
+- Dari hasil pengecekan EDA terdapat nilai yang missing pada index ke 4000 sehingga index tersebut dapat dihapus dikarenakan mengganggu pelatihan model dan menyebabkan bias pada hasil prediksi.
+
+## 4.3 Konversi Tipe Data yang Sesuai
+- Berdasarkan hasil EDA, ditemukan bahwa terdapat 1 kolom dengan tipe data yang tidak sesuai, sehingga perlu dilakukan konversi tipe data yang sesuai yaitu float64.
+- Namun, sebelum melakukan konversi tipe data, perlu dilakukan penanganan terhadap nilai yang hilang (missing values). Hal ini penting karena proses konversi akan gagal jika masih terdapat nilai tidak valid atau bukan numerik, seperti pada kolom Acidity yang berisi teks di salah satu baris, sementara kolom lainnya di baris tersebut memiliki nilai NaN.
+- Jika langsung dilakukan konversi tanpa penanganan missing values, maka akan terjadi error karena adanya nilai yang tidak sesuai format numerik.
+
+## 4.4 Penanganan Outlier
+- Outlier yang telah dicek pada tahap EDA perlu ditangani dengan cara menghapusnya menggunakan IQR.
+- IQR (Interquartile Range) merupakan rentang antara kuartil ketiga (Q3) dan kuartil pertama (Q1) yang digunakan untuk mengukur sebaran tengah data dan mendeteksi nilai-nilai yang dianggap sebagai outlier.
+$$IQR = Q_3 - Q_1$$
+- Keterangan
+  - Q1 adalah kuartil pertama 
+  - Q3 adalah kuartil ketiga.
+
+- Untuk menghapus outlier, data yang berada di luar rentang [Q1 - 1.5 * IQR dan Q3 + 1.5 * IQR] dianggap sebagai outlier dan dihapus.
+- Adapun jumlah data sebelum penanganan outlier dan setelah penaganagn outlier sebagai berikut:
+  - Jumlah data sebelum penanganan outlier = 4000
+  - Jumlah data setelah penanganan outlier = 3790  
+
+## 4.5 Mengidentifikasi Fitur dan Label
 
 Tahap selanjutnya adalah mengidentifikasi fitur dan label dari dataset. Fitur (*features*) adalah variabel yang digunakan sebagai input untuk memprediksi target, sedangkan label (*target*) adalah variabel yang ingin diprediksi.
 
@@ -251,21 +289,21 @@ Pada kasus ini:
 - **Label**:  
   - `Quality`, karena merupakan target klasifikasi kualitas apel (baik/buruk)
 
-## 4.2 Encoding
+## 4.6 Encoding
 Sebelum data dibagi ke dalam data latih dan data uji, perlu dilakukan proses **encoding** terhadap kolom `Quality` karena tipe datanya masih berupa `object` (string), yaitu `"good"` dan `"bad"`. Model machine learning hanya dapat menerima input dalam bentuk numerik, sehingga perlu dilakukan konversi label ke bentuk bilangan bulat.
 
 - Proses encoding:
   - `good` → `1`
   - `bad` → `0`
 
-## 4.3 Membagi Data
+## 4.7 Membagi Data
 Tahap berikutnya adalah membagi data menjadi data latih dan data uji dengan rasio 80:20. Pembagian ini penting untuk memastikan bahwa model tidak hanya belajar dari keseluruhan data tetapi juga diuji pada data yang belum pernah dilihat sebelumnya, sehingga performanya dapat dievaluasi secara objektif.
 
 Jumlah data awal yang tersedia adalah 3790 baris. Setelah dilakukan pembagian data:
   - Data latih (train set): 3.032 data (80%)
 - Data uji (test set): 758 data (20%)
 
-## 4.4 Feature Scaling
+## 4.8 Feature Scaling
 Pada tahap ini dilakukan proses normalisasi data menggunakan Min-Max Scaling.  Normalisasi dilakukan dikarenakan proyek ini  akan menggunakan model berbasis jarak seperti K-Nearest Neighbors (KNN), Support Vector Machine (SVM), dan juga Logistic Regression, di mana performa model tersebut akan lebih optimal jika setiap fitur berada dalam rentang skala 0 hingga 1.
 
 # 5. Modeling
@@ -513,6 +551,32 @@ Berdasarkan hasil evaluasi, model **Support Vector Machine (SVM)** menunjukkan p
 
 Dengan keunggulan di keempat metrik tersebut, **SVM dipilih sebagai model terbaik** dalam proyek ini karena mampu memberikan performa tinggi dan seimbang dalam mengklasifikasi data apel berdasarkan kualitasnya.
 
+## 6.7 Kesimpulan Evaluasi: Dampak terhadap Business Understanding
+- Evaluasi dilakukan untuk menilai sejauh mana model klasifikasi kualitas apel yang dibangun mampu menjawab problem statement, mencapai goals yang telah ditetapkan, serta membuktikan efektivitas dari solusi yang diterapkan sepanjang proyek.
+
+### 6.7.1 Hubungan Evaluation terhadap Problem Statement dan Goals
+- Adapun model yang dikembangkan telah menjawab tiga problem statement dan goalsnya:
+1. Kemampuan klasifikasi kualitas apel secara akurat dan efisien
+- Berdasarkan hasil evaluasi, model SVC menghasilkan akurasi sebesar 91.56%, precision 93.49%, recall 89.61%, dan F1-score 91.51%, yang menunjukkan bahwa model mampu melakukan klasifikasi kualitas apel secara akurat berdasarkan fitur-fitur seperti ukuran (Size), berat (Weight), kemanisan (Sweetness), kerenyahan (Crunchiness), kesegaran (Juiciness), kematangan (Ripeness), dan keasaman (Acidity). Ini membuktikan bahwa solusi yang dibangun telah berhasil menyelesaikan problem statement pertama.
+
+2. Penggunaan metrik evaluasi yang tepat
+- Metrik seperti akurasi, precision, recall, dan F1-score dipilih karena mampu memberikan gambaran yang terhadap performa model. Hal ini memastikan hasil model dapat diandalkan untuk digunakan di lapangan, sesuai dengan problem statement kedua.
+
+3. Manfaat nyata bagi sektor pertanian
+- Dengan performa model yang tinggi, hasil klasifikasi dapat digunakan untuk mendukung pertanian seperti :
+  I. Proses pemilahan apel,
+  II. Penetapan harga jual,
+  III. Meningkatkan daya saing produk lokal.
+- Artinya, model ini tidak hanya menyelesaikan masalah teknis, tapi juga memberikan nilai bisnis dan sosial, selaras dengan problem statement dan goals ketiga.
+
+### 6.7.2 Efektivitas Solusi yang Diterapkan
+- Adapun efektivitas Setiap langkah dalam solution statement terhadap hasil akhir:
+1. Exploratory Data Analysis (EDA) memberikan pemahaman yang lebih dalam terhadap pola hubungan antar fitur dan kualitas apel, yang sangat penting untuk menentukan fitur-fitur kunci dalam model.
+2. Pembersihan dan pra-pemrosesan data seperti penanganan missing values, penyesuaian kolom dan tipe datanya, encoding, serta normalisasi memungkinkan model untuk belajar dari data yang representatif dan konsisten.
+3. Pengembangan beragam model machine learning memungkinkan perbandingan performa secara objektif, dan memberikan alternatif pendekatan yang lebih baik. Misalnya, meskipun Logistic Regression menunjukkan performa terendah, model lainnya seperti SVC dan KNN mengalami peningkatan signifikan setelah tuning.
+5. Grid Search untuk tuning hyperparameter terbukti meningkatkan kinerja model secara signifikan, terutama pada KNN, SVC, dan Decision Tree.
+
+- Dengan demikian, evaluasi ini membuktikan bahwa pendekatan yang digunakan tidak hanya tepat secara teknis, tetapi juga relevan dengan kebutuhan pengguna di lapangan.
 ---
 
 # Referensi
