@@ -177,9 +177,10 @@ Index| A_id | Size | Weight | Sweetness | Crunchiness | Juiciness | Ripeness | A
 ## 3.3 EDA - Pengecekan Data Duplikat
 - Pengecekan data yang berulang (duplicated data) dilakukan agar memastikan data yang digunakan tidak duplikat, karena penggunaan data yang sama berulang kali dapat menyebabkan model mempelajari informasi yang tidak representatif, serta dapat menyebabkan bias pada hasil analisis dan model yang dibangun.
 - Berikut adalah kode Python yang digunakan:
-'''# Cek jumlah data yang duplikat
+```python
+# Cek jumlah data yang duplikat
 print(f'Jumlah data yang duplikat : {apple_df.duplicated().sum()}')
-'''
+```
 - Hasilnya:
 
 Jumlah Data yang Duplikat : 0
