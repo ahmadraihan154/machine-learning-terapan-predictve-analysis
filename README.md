@@ -566,9 +566,9 @@ Dengan keunggulan di keempat metrik tersebut, **SVM dipilih sebagai model terbai
 
 3. Manfaat nyata bagi sektor pertanian
 - Dengan performa model yang tinggi, hasil klasifikasi dapat digunakan untuk mendukung pertanian seperti :
-  I. Proses pemilahan apel,
-  II. Penetapan harga jual,
-  III. Meningkatkan daya saing produk lokal.
+  1. Proses pemilahan apel,
+  2. Penetapan harga jual,
+  3. Meningkatkan daya saing produk lokal.
 - Artinya, model ini tidak hanya menyelesaikan masalah teknis, tapi juga memberikan nilai bisnis dan sosial, selaras dengan problem statement dan goals ketiga.
 
 ### 6.7.2 Efektivitas Solusi yang Diterapkan
