@@ -251,7 +251,7 @@ Pada tahap data preparation, setelah memahami kondisi data maka dilakukanlah pre
 - Dari hasil pengecekan terdapat kolom A_id yang perlu dihapus karena kolom ini hanyalah identifier dan tidak memberikan kontribusi informasi yang relevan terhadap proses klasifikasi kualitas apel, sehingga penghapusannya penting untuk mencegah model belajar dari pola yang tidak bermakna selama proses pelatihan.
 
 ## 4.2 Penanganan Missing Value (Nilai yang hilang)
-- Dari hasil pengecekan EDA terdapat nilai yang missing pada index ke 4000 sehingga index tersebut dapat dihapus dikarenakan mengganggu pelatihan model dan menyebabkan bias pada hasil prediksi.
+- Dari hasil pengecekan EDA terdapat nilai yang missing pada index ke 4000 sehingga data tersebut dapat dihapus dikarenakan mengganggu pelatihan model dan menyebabkan bias pada hasil prediksi.
 
 ## 4.3 Konversi Tipe Data yang Sesuai
 - Berdasarkan hasil EDA, ditemukan bahwa terdapat 1 kolom dengan tipe data yang tidak sesuai, sehingga perlu dilakukan konversi tipe data yang sesuai yaitu float64.
