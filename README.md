@@ -152,6 +152,7 @@ Pengecekan ini diperlukan agar memastikan bahwa tidak ada nilai yang hilang (`mi
 ```python
 # Cek kolom dengan data yang hilang
 apple_df.isnull().sum()
+apple_df[apple_df.isnull.any(axis=1)]
 ```
 - Hasilnya:
 
